@@ -11,25 +11,31 @@ const makeGalleryMarkup = items =>
 	items
 		.map(({ original, preview, description }) => {
 			return `
-                    <div class="gallery__item">
-                        <a class="gallery__link" href="${original}">
-                            <img
-                                data-source="${original}"
-                                src="${preview}"
-                                alt="${description}"
-                                class="gallery__image"
-                            />
-                        </a>
-                    </div>
-                    `;
+            <div class="gallery__item">
+                <a class="gallery__link" href="${original}">
+                    <img
+                        data-source="${original}"
+                        src="${preview}"
+                        alt="${description}"
+                        class="gallery__image"
+                    />
+                </a>
+            </div>
+            `;
 		})
 		.join("");
-console.log(makeGalleryMarkup(galleryItems));
+const galleryMarkup = makeGalleryMarkup(galleryItems);
+refs.gallery.insertAdjacentHTML("beforeend", galleryMarkup);
 
-// makeGalleryMarkup(galleryItems)
+const onGallertItemClick = e => {
+	if (e.target === e.currentTarget) return;
+	e.preventDefault();
+	console.log(e.target.dataset.source);
+	const instance = basicLightbox.create(`
+<img width="1400" height="900" src="${e.target.dataset.source}">
+`);
 
-// const onGallertItemClick = e => {
-// 	console.log("click");
-// };
+	instance.show();
+};
 
-// refs.gallery.addEventListener("click", onGallertItemClick);
+refs.gallery.addEventListener("click", onGallertItemClick);
