@@ -24,16 +24,20 @@ const makeGalleryMarkup = items =>
             `;
 		})
 		.join("");
+
 const galleryMarkup = makeGalleryMarkup(galleryItems);
+
 refs.gallery.insertAdjacentHTML("beforeend", galleryMarkup);
 
-let modal = basicLightbox.create(`<img src="">`);
+let modal = basicLightbox.create(``);
 
 const onEscKeyPress = e => {
 	console.log("натиснув шось");
+	modal.close();
+	window.removeEventListener("keydown", onEscKeyPress);
 };
 
-const onGallertItemClick = e => {
+const onOpenModal = e => {
 	if (e.target === e.currentTarget) return;
 	e.preventDefault();
 
@@ -43,11 +47,7 @@ const onGallertItemClick = e => {
 	`,
 	);
 	modal.show();
-
 	window.addEventListener("keydown", onEscKeyPress);
 };
-// setTimeout(() => {
-// 	modal.close();
-// }, 2000);
 
-refs.gallery.addEventListener("click", onGallertItemClick);
+refs.gallery.addEventListener("click", onOpenModal);
