@@ -7,9 +7,7 @@ const refs = {
 	gallery: document.querySelector(".gallery"),
 };
 
-const galleryMarkup = makeGalleryMarkup(galleryItems);
-
-refs.gallery.insertAdjacentHTML("beforeend", galleryMarkup);
+refs.gallery.insertAdjacentHTML("beforeend", makeGalleryMarkup(galleryItems));
 
 let modal = basicLightbox.create(``);
 
