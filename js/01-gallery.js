@@ -32,7 +32,7 @@ refs.gallery.insertAdjacentHTML("beforeend", galleryMarkup);
 let modal = basicLightbox.create(``);
 
 const onEscKeyPress = e => {
-	console.log("натиснув шось");
+	if (e.code !== "Escape") return;
 	modal.close();
 	window.removeEventListener("keydown", onEscKeyPress);
 };
