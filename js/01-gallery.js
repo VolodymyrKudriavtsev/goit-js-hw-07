@@ -7,8 +7,16 @@ const refs = {
 	gallery: document.querySelector(".gallery"),
 };
 
-const makeGalleryMarkup = items =>
-	items
+const galleryMarkup = makeGalleryMarkup(galleryItems);
+
+refs.gallery.insertAdjacentHTML("beforeend", galleryMarkup);
+
+let modal = basicLightbox.create(``);
+
+refs.gallery.addEventListener("click", onOpenModal);
+
+function makeGalleryMarkup(items) {
+	return items
 		.map(({ original, preview, description }) => {
 			return `
             <div class="gallery__item">
@@ -24,20 +32,9 @@ const makeGalleryMarkup = items =>
             `;
 		})
 		.join("");
+}
 
-const galleryMarkup = makeGalleryMarkup(galleryItems);
-
-refs.gallery.insertAdjacentHTML("beforeend", galleryMarkup);
-
-let modal = basicLightbox.create(``);
-
-const onEscKeyPress = e => {
-	if (e.code !== "Escape") return;
-	modal.close();
-	window.removeEventListener("keydown", onEscKeyPress);
-};
-
-const onOpenModal = e => {
+function onOpenModal(e) {
 	if (e.target === e.currentTarget) return;
 	e.preventDefault();
 
@@ -48,6 +45,10 @@ const onOpenModal = e => {
 	);
 	modal.show();
 	window.addEventListener("keydown", onEscKeyPress);
-};
+}
 
-refs.gallery.addEventListener("click", onOpenModal);
+function onEscKeyPress(e) {
+	if (e.code !== "Escape") return;
+	modal.close();
+	window.removeEventListener("keydown", onEscKeyPress);
+}
