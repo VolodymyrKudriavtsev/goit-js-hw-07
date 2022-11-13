@@ -27,15 +27,27 @@ const makeGalleryMarkup = items =>
 const galleryMarkup = makeGalleryMarkup(galleryItems);
 refs.gallery.insertAdjacentHTML("beforeend", galleryMarkup);
 
+let modal = basicLightbox.create(`<img src="">`);
+
+const onEscKeyPress = e => {
+	console.log("натиснув шось");
+};
+
 const onGallertItemClick = e => {
 	if (e.target === e.currentTarget) return;
 	e.preventDefault();
-	console.log(e.target.dataset.source);
-	const instance = basicLightbox.create(`
-<img width="1400" height="900" src="${e.target.dataset.source}">
-`);
 
-	instance.show();
+	modal = basicLightbox.create(
+		`
+	<img src="${e.target.dataset.source}">
+	`,
+	);
+	modal.show();
+
+	window.addEventListener("keydown", onEscKeyPress);
 };
+// setTimeout(() => {
+// 	modal.close();
+// }, 2000);
 
 refs.gallery.addEventListener("click", onGallertItemClick);
