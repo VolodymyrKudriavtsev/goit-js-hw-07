@@ -9,9 +9,6 @@ const refs = {
 
 refs.gallery.insertAdjacentHTML("beforeend", makeGalleryMarkup(galleryItems));
 
-// let modal = "";
-// console.log(modal);
-
 refs.gallery.addEventListener("click", onOpenModal);
 
 function makeGalleryMarkup(items) {
@@ -48,9 +45,14 @@ function onOpenModal(e) {
 	);
 	modal.show();
 
-	function onEscKeyPress(e) {
-		if (e.code === "Escape") {
-			modal.close();
-		}
+	function onEscKeyPress({ code }) {
+		if (code !== "Escape") return;
+		modal.close();
 	}
+
+	// function onEscKeyPress(e) {
+	// 	if (e.code === "Escape") {
+	// 		modal.close();
+	// 	}
+	// }
 }
